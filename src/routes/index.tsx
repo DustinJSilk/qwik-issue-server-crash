@@ -1,25 +1,23 @@
-import { component$ } from '@builder.io/qwik';
-import type { DocumentHead } from '@builder.io/qwik-city';
+import { component$ } from "@builder.io/qwik";
+import { server$ } from "@builder.io/qwik-city";
+
+const search = server$(async () => {
+  // Simulate a long running request
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  return "Some data";
+});
 
 export default component$(() => {
   return (
     <>
-      <h1>Hi 👋</h1>
-      <p>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </p>
+      <button
+        onClick$={async () => {
+          await search();
+        }}
+      >
+        Click me then refresh
+      </button>
     </>
   );
 });
-
-export const head: DocumentHead = {
-  title: 'Welcome to Qwik',
-  meta: [
-    {
-      name: 'description',
-      content: 'Qwik site description',
-    },
-  ],
-};
